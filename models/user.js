@@ -26,6 +26,11 @@ var userSchema = mongoose.Schema({
 		required: true,
 		default: 0
 	},
+	beneficiaries: {
+		type: [Number],
+		required: true,
+		default: []
+	},
 	image_url:{
 		type: String
 	},

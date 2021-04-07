@@ -12,10 +12,11 @@ var auth = require('./routes/auth');
 var register = require('./routes/register');
 var member = require('./routes/member');
 var api = require('./routes/api');
+var beneficiaries = require('./routes/beneficiaries');
 var app = express();
 redirect(app);
 //Connect to Mongoose
-mongoose.connect('mongodb://jeffreynerona:VyxfpsiDdWh4oF1I@cluster0-shard-00-00-k7flg.mongodb.net:27017,cluster0-shard-00-01-k7flg.mongodb.net:27017,cluster0-shard-00-02-k7flg.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin',{useNewUrlParser: true , useUnifiedTopology: true});
+mongoose.connect('mongodb+srv://bank-node:bank-node@cluster0.brwic.mongodb.net/bank-node?retryWrites=true&w=majority',{useNewUrlParser: true , useUnifiedTopology: true});
 var db = mongoose.connection;
 
 // view engine setup
@@ -35,6 +36,7 @@ app.use('/login',auth);
 app.use('/register',register);
 app.use('/member',member);
 app.use('/api',api);
+app.use('/beneficiaries',beneficiaries)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
