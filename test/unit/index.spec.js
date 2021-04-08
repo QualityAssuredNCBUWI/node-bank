@@ -32,12 +32,20 @@ describe('verifyPassword', function() {
     var pass = "123";
   });
 
-  it('should ...', function() {
-    verifyPassword(pass);
+  it('should alert user if password is less than 8 characters', function() {
+    var result = verifyPassword(pass);
+    expect(result).toBe("Password length must be atleast 8 characters")
   });
 
-  it('should ...', function() {
-    verifyPassword(pass);
+  it('should return Password is empty, if password is ""', function() {
+    pass = ""
+    var result = verifyPassword(pass);
+    expect(result).toBe("Password is empty")
   });
 
+  it('should alert user if password is greater than 15 characters', function() {
+    pass = "password123456789"
+    var result = verifyPassword(pass);
+    expect(result).toBe("Password length must not exceed 15 characters")
+  });
 });

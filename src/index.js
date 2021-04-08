@@ -1,5 +1,48 @@
 'use strict';
 
+var makeWithdrawal = function(card_number, money){
+	fetch("http://localhost:3000/member/transact",
+        {
+			credentials: "same-origin",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({action: "WITHDRAW", card: card_number, amount: money})
+		})
+        .catch(function(err){ return {"status":"error"} })	
+}
+
+var makeDeposit = function(card_number, money){
+	fetch("http://localhost:3000/member/transact",
+        {
+			credentials: "same-origin",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({action: "DEPOSIT", card: card_number, amount: money})
+		})
+        .catch(function(err){ return {"status":"error"} })
+};
+
+var checkBalance = function(card_number){
+	fetch(`http://localhost:3000/api/user/${card_number}`,
+        {
+			credentials: "same-origin",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            method: "GET",
+		})
+		.then(response => response.json() )
+		.then(response => {return response})
+        .catch(function(err){ return err })
+	
+}
 
 var isEmailValid = function(emailAddr) {
 	if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(emailAddr))
