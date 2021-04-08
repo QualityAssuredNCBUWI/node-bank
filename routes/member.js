@@ -3,7 +3,6 @@ var router = express.Router();
 var User = require('../models/user');
 var mongoose = require('mongoose');
 var userdata;
-var to;
 
 /* Get member page. */
 router.get('/', function(req, res, next) {
@@ -107,6 +106,7 @@ router.post('/transfer', function(req, res, next) {
           });
       });
   };
+  res.redirect('/member')
 });
 
 module.exports = router;

@@ -2,7 +2,7 @@ config:
   target: 'http://localhost:3000'
   phases:
     - duration: 10 # number of seconds for the scenario to run in
-      arrivalRate: 1000 # number of virtual users
+      arrivalRate: 100 # number of virtual users
 scenarios:
   - flow:
       - get: 
@@ -40,4 +40,14 @@ scenarios:
               amount: 2000
               card: "8768768768"
               action: "WITHDRAW"
+
+  # Load Test 3 <transfer>
+  - flow: 
+      - post:
+          url: "/member/transfer"
+          json:
+              amount: 10000
+              card: "8768768768"
+              action: "WITHDRAW"
+              bene: "1234567"
   
