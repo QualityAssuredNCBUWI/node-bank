@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 
 /* Get beneficiaries page. */
 router.get('/', function(req,res,next) {
-    res.render('beneficiaries');
+    res.render('beneficiaries', { title: 'Beneficiaries' });
 });
 
 module.exports = router;
