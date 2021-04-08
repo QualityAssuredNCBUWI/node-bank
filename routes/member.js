@@ -3,6 +3,7 @@ var router = express.Router();
 var User = require('../models/user');
 var mongoose = require('mongoose');
 var userdata;
+var to;
 
 /* Get member page. */
 router.get('/', function(req, res, next) {
@@ -78,31 +79,34 @@ router.post('/transfer', function(req, res, next) {
   var bene = req.body.bene
   console.log(amount+' '+card+' '+action+' '+bene);
   if(userdata.money >= amount){
-      var to = User.findOne({ 'card' : bene });
-      var newAmount = parseInt(userdata.money) - parseInt(amount);
-      var toSend = parseInt(to.money) + parseInt(amount)
-
-      if(newAmount<0){res.redirect('/member'); return;} // Old method of checking for overdraft
-
-      var withdraw = User.updateOne(
-        { 'card' : card },
-        { $set: { 'money' : newAmount } }
-      );
-      withdraw.exec(function (err, result) {
-      if (err) return handleError(err);
-        console.log(result);
-      });
-
-      var deposit = User.updateOne(
-        {'card' : to.card },
-        { $set: { 'money' : toSend }}
-      );
-      deposit.exec(function (err, result){
+      var query = User.findOne({ "card" : bene }, 'name email money card image_url beneficiaries');
+      query.exec(function (err, user) {
         if (err) return handleError(err);
-        console.log(result)
-      })
+          to = user;
+          var newAmount = parseInt(userdata.money) - parseInt(amount);
+          var toSend = parseInt(to.money) + parseInt(amount)
+
+          if(newAmount<0){res.redirect('/member'); return;} // Old method of checking for overdraft
+
+          var withdraw = User.updateOne(
+            { 'card' : card },
+            { $set: { 'money' : newAmount } }
+          );
+          withdraw.exec(function (err, result) {
+          if (err) return handleError(err);
+            console.log(result);
+            var deposit = User.updateOne(
+              {'card' : to.card },
+              { $set: { 'money' : toSend }}
+            );
+            deposit.exec(function (err, result){
+              if (err) return handleError(err);
+              console.log(result)
+              res.redirect('/member');
+            })
+          });
+      });
   };
-    res.redirect('/member');
 });
 
 module.exports = router;

@@ -12,7 +12,8 @@ router.get('/', function(req,res,next) {
         query.exec(function (err, user) {
         if (err) return handleError(err);
           userdata=user;
-          res.render('beneficiaries', {userdata: user, title: 'Beneficiaries', action: 'BENEFICIARIES'});        });
+          res.render('beneficiaries', {userdata: user, title: 'Beneficiaries', action: 'BENEFICIARIES'});
+        });
     } else {
         res.redirect('/login');
     }
