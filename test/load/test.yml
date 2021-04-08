@@ -2,7 +2,7 @@ config:
   target: 'http://localhost:3000'
   phases:
     - duration: 10 # number of seconds for the scenario to run in
-      arrivalRate: 100 # number of virtual users
+      arrivalRate: 10 # number of virtual users
 scenarios:
   - flow:
       - get: 
@@ -11,5 +11,33 @@ scenarios:
       - post: 
           url: "/login"
           json:
-              email: "you@example.com"
+              email: "nathanielbedassie@gmail.com"
               password: "Password"
+
+  # Load Test 1 <register>
+  - flow: 
+      - post:
+          url: "/register"
+          json:
+              name: "You Me"
+              email: "youme@example.com"
+              password: "1h9adjpot9"
+              card: "how about that?"
+
+  # Load Test 2 <deposit/withdraw>
+  - flow: 
+      - post:
+          url: "/member/transact"
+          json:
+              amount: 2001
+              card: "8768768768"
+              action: "DEPOSIT"
+
+  - flow: 
+      - post:
+          url: "/member/transact"
+          json:
+              amount: 2000
+              card: "8768768768"
+              action: "WITHDRAW"
+  
