@@ -17,7 +17,7 @@ describe('deposit', function() {
         amount = 1000
         var result = makeDeposit("8768768768", amount)
         result = checkBalance("8768768768")
-        expect(result.money).toBe(balance + amount)
+        expect(result).toBe(balance + amount)
       });
     
     it('should ...', function() {

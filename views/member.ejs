@@ -1,6 +1,8 @@
 	<%- include('partials/header') %>
 <% if(action=='MAIN') { %>
-    <%- include('partials/main') %>
+	<%- include('partials/main') %>
+<% } else if(action=="TRANSFER") { %>
+	<%- include('partials/transfer') %>
 <% } else { %>
 	<%- include('partials/transact') %>
 <% } %>

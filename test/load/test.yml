@@ -2,7 +2,7 @@ config:
   target: 'http://localhost:3000'
   phases:
     - duration: 10 # number of seconds for the scenario to run in
-      arrivalRate: 10 # number of virtual users
+      arrivalRate: 1000 # number of virtual users
 scenarios:
   - flow:
       - get: 

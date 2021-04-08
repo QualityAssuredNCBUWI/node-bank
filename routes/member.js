@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
   if(req.cookies.logged){
     var uid = req.cookies.logged;
     var query = User.findOne({ '_id' : uid });
-    query.select('name email money card image_url');
+    query.select('name email money card image_url beneficiaries');
     query.exec(function (err, user) {
     if (err) return handleError(err);
       userdata=user;
@@ -63,4 +63,46 @@ router.post('/transact', function(req, res, next) {
     };
     res.redirect('/member');
 });
+
+router.get('/transfer', function(req, res, next) {
+  res.render('member', { action: 'TRANSFER', userdata: userdata, title: 'Transfer'  });
+});
+
+router.post('/transfer', function(req, res, next) {
+  console.log('tranfer working');
+  var result = ''
+
+  var amount = req.body.amount;
+  var card = req.body.card;
+  var action = req.body.action;
+  var bene = req.body.bene
+  console.log(amount+' '+card+' '+action+' '+bene);
+  if(userdata.money >= amount){
+      var to = User.findOne({ 'card' : bene });
+      var newAmount = parseInt(userdata.money) - parseInt(amount);
+      var toSend = parseInt(to.money) + parseInt(amount)
+
+      if(newAmount<0){res.redirect('/member'); return;} // Old method of checking for overdraft
+
+      var withdraw = User.updateOne(
+        { 'card' : card },
+        { $set: { 'money' : newAmount } }
+      );
+      withdraw.exec(function (err, result) {
+      if (err) return handleError(err);
+        console.log(result);
+      });
+
+      var deposit = User.updateOne(
+        {'card' : to.card },
+        { $set: { 'money' : toSend }}
+      );
+      deposit.exec(function (err, result){
+        if (err) return handleError(err);
+        console.log(result)
+      })
+  };
+    res.redirect('/member');
+});
+
 module.exports = router;

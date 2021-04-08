@@ -1,3 +1,26 @@
 <%- include('partials/header') %>
-<h2>YOYO</h2>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3"></div>
+          <div class="col-md-6">
+              <p class="lead">
+              <ul class="list-group">
+                <li class="list-group-item active">Account Beneficiaries</li>
+                <% userdata.beneficiaries.forEach( bene => { %>
+                    <li class="list-group-item"><strong>Account Holder: </strong> <%= bene %></li>
+                <% }) %>
+              </ul>
+              <p class="lead">
+                  <div class="btn-group btn-block btn-group-lg" role="group" aria-label="Actions">
+                    <a href="/member" type="button" class="btn btn-link">Go to Your Account</a>
+                  </div>
+               </p>
+          </div>
+          <div class="col-md-3"></div>
+        </div>
+    </div>
+  </div>
+
 <%- include('partials/footer') %>
