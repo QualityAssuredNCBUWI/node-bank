@@ -106,7 +106,6 @@ router.post('/transfer', function(req, res, next) {
           });
       });
   };
-  res.redirect('/member')
 });
 
 module.exports = router;
