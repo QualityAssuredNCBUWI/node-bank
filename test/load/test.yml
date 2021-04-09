@@ -48,6 +48,6 @@ scenarios:
           json:
               amount: 10000
               card: "8768768768"
-              action: "WITHDRAW"
-              bene: "1234567"
+              action: "TRANSFER"
+              bene: "12345678"
   
